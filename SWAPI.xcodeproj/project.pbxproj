@@ -11,6 +11,8 @@
 		AA5339C42B821006002B52BE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5339C32B821006002B52BE /* ContentView.swift */; };
 		AA5339C62B821007002B52BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA5339C52B821007002B52BE /* Assets.xcassets */; };
 		AA5339C92B821007002B52BE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA5339C82B821007002B52BE /* Preview Assets.xcassets */; };
+		AA5339D12B8211F6002B52BE /* HTTPTypes in Frameworks */ = {isa = PBXBuildFile; productRef = AA5339D02B8211F6002B52BE /* HTTPTypes */; };
+		AA5339D32B8211F6002B52BE /* HTTPTypesFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = AA5339D22B8211F6002B52BE /* HTTPTypesFoundation */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA5339D12B8211F6002B52BE /* HTTPTypes in Frameworks */,
+				AA5339D32B8211F6002B52BE /* HTTPTypesFoundation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +87,10 @@
 			dependencies = (
 			);
 			name = SWAPI;
+			packageProductDependencies = (
+				AA5339D02B8211F6002B52BE /* HTTPTypes */,
+				AA5339D22B8211F6002B52BE /* HTTPTypesFoundation */,
+			);
 			productName = SWAPI;
 			productReference = AA5339BE2B821006002B52BE /* SWAPI.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +119,9 @@
 				Base,
 			);
 			mainGroup = AA5339B52B821006002B52BE;
+			packageReferences = (
+				AA5339CF2B8211F6002B52BE /* XCRemoteSwiftPackageReference "swift-http-types" */,
+			);
 			productRefGroup = AA5339BF2B821006002B52BE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -344,6 +355,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AA5339CF2B8211F6002B52BE /* XCRemoteSwiftPackageReference "swift-http-types" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-http-types.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AA5339D02B8211F6002B52BE /* HTTPTypes */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA5339CF2B8211F6002B52BE /* XCRemoteSwiftPackageReference "swift-http-types" */;
+			productName = HTTPTypes;
+		};
+		AA5339D22B8211F6002B52BE /* HTTPTypesFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA5339CF2B8211F6002B52BE /* XCRemoteSwiftPackageReference "swift-http-types" */;
+			productName = HTTPTypesFoundation;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = AA5339B62B821006002B52BE /* Project object */;
 }
