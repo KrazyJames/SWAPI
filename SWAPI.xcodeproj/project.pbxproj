@@ -16,6 +16,7 @@
 		AA5339D52B821306002B52BE /* People.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5339D42B821306002B52BE /* People.swift */; };
 		AA5339D92B8215DC002B52BE /* PeopleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5339D82B8215DC002B52BE /* PeopleListView.swift */; };
 		AA5339DC2B821E53002B52BE /* PeopleListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5339DB2B821E53002B52BE /* PeopleListRowView.swift */; };
+		AA5339DE2B822053002B52BE /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA5339DD2B822053002B52BE /* NetworkManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		AA5339D42B821306002B52BE /* People.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = People.swift; sourceTree = "<group>"; };
 		AA5339D82B8215DC002B52BE /* PeopleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleListView.swift; sourceTree = "<group>"; };
 		AA5339DB2B821E53002B52BE /* PeopleListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleListRowView.swift; sourceTree = "<group>"; };
+		AA5339DD2B822053002B52BE /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 			isa = PBXGroup;
 			children = (
 				AA5339C12B821006002B52BE /* SWAPIApp.swift */,
+				AA5339DD2B822053002B52BE /* NetworkManager.swift */,
 				AA5339D62B82130D002B52BE /* Models */,
 				AA5339D72B821317002B52BE /* Views */,
 				AA5339C52B821007002B52BE /* Assets.xcassets */,
@@ -181,6 +184,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA5339DE2B822053002B52BE /* NetworkManager.swift in Sources */,
 				AA5339C42B821006002B52BE /* ContentView.swift in Sources */,
 				AA5339D52B821306002B52BE /* People.swift in Sources */,
 				AA5339C22B821006002B52BE /* SWAPIApp.swift in Sources */,
