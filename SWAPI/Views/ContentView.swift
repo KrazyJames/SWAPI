@@ -14,8 +14,8 @@ enum Tab: String, Hashable, Identifiable, CaseIterable {
     case people
     case planets
     case films
-    case species
-    case vehicles
+    // case species
+    // case vehicles
     case starships
 
     var title: String {
@@ -30,10 +30,11 @@ enum Tab: String, Hashable, Identifiable, CaseIterable {
             "globe"
         case .films:
             "film.stack"
-        case .species:
+        /* case .species:
             "pawprint.fill"
         case .vehicles:
             "car.fill"
+             */
         case .starships:
             "airplane"
         }
@@ -41,17 +42,33 @@ enum Tab: String, Hashable, Identifiable, CaseIterable {
 }
 
 struct ContentView: View {
-    @State private var selectedTab: Tab = .people
+    @State private var selectedTab: Tab = .films
     var body: some View {
         TabView(selection: $selectedTab)  {
+            ForEach(Tab.allCases) { tab in
+                tabView(for: tab)
+                    .tabItem {
+                        Label(tab.title, systemImage: tab.icon)
+                    }
+            }
+        }
+    }
+
+    @ViewBuilder func tabView(for tab: Tab) -> some View {
+        switch tab {
+        case .people:
             PeopleListView()
-                .tabItem {
-                    Label(Tab.people.title, systemImage: Tab.people.icon)
-                }
+        case .planets:
+            PlanetsListView()
+        case .films:
+            FilmsListView()
+        default:
+            Text(tab.title)
         }
     }
 }
 
 #Preview {
     ContentView()
+        .environment(SWAPIService.mock)
 }

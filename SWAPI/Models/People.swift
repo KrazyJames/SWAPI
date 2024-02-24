@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct SWAPIPeople: Decodable {
+struct People: Decodable, Identifiable, Hashable {
+    let id: Int
     let name: String
     let height: String
     let mass: String
@@ -16,109 +17,15 @@ struct SWAPIPeople: Decodable {
     let eyeColor: String
     let birthYear: String
     let gender: String
-    let homeworld: String
-    let films: [String]
-    let species: [String]
-    let vehicles: [String]
-    let starships: [String]
+    let homeworld: String // Planet
+    let films: [String] // Films
+    let species: [String] // Species
+    let vehicles: [String] // Vehicles
+    let starships: [String] // Starships
     let url: String
-}
-
-extension SWAPIPeople {
-    static var demo: Self {
-        .init(
-            name: "Luke Skywalker",
-            height: "177",
-            mass: "77",
-            hairColor: "blond",
-            skinColor: "fair",
-            eyeColor: "blue",
-            birthYear: "19BBY",
-            gender: "male",
-            homeworld: "",
-            films: .init(),
-            species: .init(),
-            vehicles: .init(),
-            starships: .init(),
-            url: ""
-        )
-    }
-}
-
-struct SWDBCharacter: Codable, Identifiable {
-    let id: String
-    let name: String
-    let bio: String
-    let image: String
-
-    enum CodingKeys: String, CodingKey {
-        case id = "_id"
-        case name
-        case bio = "description"
-        case image
-    }
 
     init(
-        id: String,
-        name: String,
-        bio: String,
-        image: String
-    ) {
-        self.id = id
-        self.name = name
-        self.bio = bio
-        self.image = image
-    }
-
-    init(from decoder: Decoder) throws {
-        var container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.decode(String.self, forKey: .id)
-        self.name = try container.decode(String.self, forKey: .name)
-        self.bio = try container.decode(String.self, forKey: .bio)
-        self.image = try container.decode(String.self, forKey: .image)
-    }
-}
-
-extension SWDBCharacter {
-    static var demo: Self {
-        .init(
-            id: "64292927021f17e13fbc2062",
-            name: "Luke Skywalker",
-            bio: "Luke Skywalker was a Tatooine farmboy who rose from humble beginnings to become one of the greatest Jedi the galaxy has ever known. Along with his friends Princess Leia and Han Solo, Luke battled the evil Empire, discovered the truth of his parentage, and ended the tyranny of the Sith. A generation later, the location of the famed Jedi master was one of the galaxy’s greatest mysteries. Haunted by Ben Solo’s fall to evil and convinced the Jedi had to end, Luke sought exile on a distant world, ignoring the galaxy’s pleas for help. But his solitude would be interrupted – and Luke Skywalker had one final, momentous role to play in the struggle between good and evil.",
-            image: "https://lumiere-a.akamaihd.net/v1/images/luke-skywalker-main_fb34a1ff.jpeg"
-        )
-    }
-}
-
-struct People: Identifiable, Hashable {
-    let id: String
-    let name: String
-    let height: String
-    let mass: String
-    let hairColor: String
-    let skinColor: String
-    let eyeColor: String
-    let birthYear: String
-    let gender: String
-    let homeworld: String
-    let films: [String]
-    let species: [String]
-    let vehicles: [String]
-    let starships: [String]
-    let url: String
-    let bio: String // description
-    let image: String
-
-    var peopleUrl: URL? {
-        .init(string: url)
-    }
-
-    var urlImage: URL? {
-        .init(string: image)
-    }
-
-    init(
-        id: String,
+        id: Int,
         name: String,
         height: String,
         mass: String,
@@ -132,9 +39,7 @@ struct People: Identifiable, Hashable {
         species: [String],
         vehicles: [String],
         starships: [String],
-        url: String,
-        bio: String,
-        image: String
+        url: String
     ) {
         self.id = id
         self.name = name
@@ -151,33 +56,130 @@ struct People: Identifiable, Hashable {
         self.vehicles = vehicles
         self.starships = starships
         self.url = url
-        self.bio = bio
-        self.image = image
     }
 
-    init(people: SWAPIPeople, character: SWDBCharacter) {
-        self.id = character.id
-        self.name = people.name
-        self.height = people.height
-        self.mass = people.mass
-        self.hairColor = people.hairColor
-        self.skinColor = people.skinColor
-        self.eyeColor = people.eyeColor
-        self.birthYear = people.birthYear
-        self.gender = people.gender
-        self.homeworld = people.homeworld
-        self.films = people.films
-        self.species = people.species
-        self.vehicles = people.vehicles
-        self.starships = people.starships
-        self.url = people.url
-        self.bio = character.bio
-        self.image = character.image
+    enum CodingKeys: CodingKey {
+        case name
+        case height
+        case mass
+        case hairColor
+        case skinColor
+        case eyeColor
+        case birthYear
+        case gender
+        case homeworld
+        case films
+        case species
+        case vehicles
+        case starships
+        case url
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.name = try container.decode(String.self, forKey: .name)
+        self.height = try container.decode(String.self, forKey: .height)
+        self.mass = try container.decode(String.self, forKey: .mass)
+        self.hairColor = try container.decode(String.self, forKey: .hairColor)
+        self.skinColor = try container.decode(String.self, forKey: .skinColor)
+        self.eyeColor = try container.decode(String.self, forKey: .eyeColor)
+        self.birthYear = try container.decode(String.self, forKey: .birthYear)
+        self.gender = try container.decode(String.self, forKey: .gender)
+        self.homeworld = try container.decode(String.self, forKey: .homeworld)
+        self.films = try container.decode([String].self, forKey: .films)
+        self.species = try container.decode([String].self, forKey: .species)
+        self.vehicles = try container.decode([String].self, forKey: .vehicles)
+        self.starships = try container.decode([String].self, forKey: .starships)
+        self.url = try container.decode(String.self, forKey: .url)
+        guard let last = url.split(separator: "/").last,
+              let id = Int(last) else {
+            throw NetworkError.decodingFailure
+        }
+        self.id = id
     }
 }
 
 extension People {
     static var demo: Self {
-        .init(people: .demo, character: .demo)
+        .init(
+            id: 1,
+            name: "Luke Skywalker",
+            height: "177",
+            mass: "77",
+            hairColor: "blond",
+            skinColor: "fair",
+            eyeColor: "blue",
+            birthYear: "19BBY",
+            gender: "male",
+            homeworld: "https://swapi.dev/api/planets/1/",
+            films: .init(arrayLiteral: ""),
+            species: .init(arrayLiteral: ""),
+            vehicles: .init(arrayLiteral: ""),
+            starships: .init(arrayLiteral: ""),
+            url: "https://swapi.dev/api/people/1/"
+        )
+    }
+}
+
+extension People {
+    var homeworldID: Int? {
+        guard let id = URL(
+            string: homeworld
+        )?.lastPathComponent else {
+            return nil
+        }
+        return id
+    }
+
+    var filmIDs: [Int] {
+        films.compactMap(URL.init)
+            .compactMap(\.lastPathComponent)
+    }
+
+    var speciesIDs: [Int] {
+        species.compactMap(URL.init)
+            .compactMap(\.lastPathComponent)
+    }
+
+    var vehicleIDs: [Int] {
+        vehicles.compactMap(URL.init)
+            .compactMap(\.lastPathComponent)
+    }
+
+    var starshipIDs: [Int] {
+        starships.compactMap(URL.init)
+            .compactMap(\.lastPathComponent)
+    }
+}
+
+extension URL {
+    var lastPathComponent: Int? {
+        guard let last = pathComponents.last,
+              let id = Int(last) else {
+            return nil
+        }
+        return id
+    }
+}
+
+struct PeopleDetails: Identifiable {
+    let id: People.ID
+    let homeworld: Planet
+    let films: [Film]
+    let species: [Species]
+    let starships: [Starship]
+    let vehicles: [Vehicle]
+}
+
+extension PeopleDetails {
+    static var demo: Self {
+        .init(
+            id: 1,
+            homeworld: .demo,
+            films: .init(arrayLiteral: .demo),
+            species: .init(arrayLiteral: .demo),
+            starships: .init(arrayLiteral: .demo),
+            vehicles: .init(arrayLiteral: .demo)
+        )
     }
 }

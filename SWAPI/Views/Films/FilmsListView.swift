@@ -1,31 +1,31 @@
 //
-//  PeopleListView.swift
+//  FilmsListView.swift
 //  SWAPI
 //
-//  Created by Jaime Escobar on 18/02/24.
+//  Created by Jaime Escobar on 24/02/24.
 //
 
 import SwiftUI
 
-struct PeopleListView: View {
+struct FilmsListView: View {
     @Environment(SWAPIService.self) private var service
-    @State private var people: [People] = []
+    @State private var films: [Film] = []
 
     var body: some View {
         NavigationStack {
             List {
-                ForEach(people) { person in
-                    NavigationLink(value: person) {
-                        PeopleListRowView(person: person)
+                ForEach(films) { film in
+                    NavigationLink(value: film) {
+                        FilmListRowView(film: film)
                     }
                 }
             }
             .overlay {
-                if people.isEmpty {
+                if films.isEmpty {
                     ContentUnavailableView(label: {
-                        Label("No people", systemImage: "person.2.slash.fill")
+                        Label("No films", image: .filmStackSlash)
                     }, description: {
-                        Text("No people to show yet.")
+                        Text("No films to show yet.")
                     }, actions: {
                         Button(action: {
                             Task {
@@ -38,11 +38,10 @@ struct PeopleListView: View {
                     })
                 }
             }
-            .navigationDestination(for: People.self) { person in
-                PeopleDetailsView(people: person)
+            .navigationDestination(for: Film.self) { film in
+                FilmDetailsView(film: film)
             }
-            .listStyle(.plain)
-            .navigationTitle("People")
+            .navigationTitle("Films")
             .task {
                 await load()
             }
@@ -51,7 +50,7 @@ struct PeopleListView: View {
 
     private func load() async {
         do {
-            people = try await service.getAll(page: 1)
+            films = try await service.getAll(page: 1)
         } catch {
             debugPrint(error.localizedDescription)
         }
@@ -59,6 +58,6 @@ struct PeopleListView: View {
 }
 
 #Preview {
-    PeopleListView()
+    FilmsListView()
         .environment(SWAPIService.mock)
 }
