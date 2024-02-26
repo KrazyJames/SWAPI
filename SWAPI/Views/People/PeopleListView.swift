@@ -10,6 +10,7 @@ import SwiftUI
 struct PeopleListView: View {
     @Environment(SWAPIService.self) private var service
     @State private var people: [People] = []
+    @State private var isLoading = false
 
     var body: some View {
         NavigationStack {
@@ -21,7 +22,9 @@ struct PeopleListView: View {
                 }
             }
             .overlay {
-                if people.isEmpty {
+                if isLoading {
+                    ProgressView("Loading")
+                } else if people.isEmpty {
                     ContentUnavailableView(label: {
                         Label("No people", systemImage: "person.2.slash.fill")
                     }, description: {
@@ -41,7 +44,6 @@ struct PeopleListView: View {
             .navigationDestination(for: People.self) { person in
                 PeopleDetailsView(people: person)
             }
-            .listStyle(.plain)
             .navigationTitle("People")
             .task {
                 await load()
@@ -50,11 +52,14 @@ struct PeopleListView: View {
     }
 
     private func load() async {
+        guard people.isEmpty else { return }
+        isLoading = true
         do {
             people = try await service.getAll(page: 1)
         } catch {
             debugPrint(error)
         }
+        isLoading = false
     }
 }
 
