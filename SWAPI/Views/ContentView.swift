@@ -50,6 +50,7 @@ struct ContentView: View {
                     .tabItem {
                         Label(tab.title, systemImage: tab.icon)
                     }
+                    .tag(tab)
             }
         }
     }
