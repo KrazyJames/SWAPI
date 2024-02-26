@@ -7,31 +7,48 @@
 
 import Foundation
 
-struct Starship: Decodable, Identifiable, Hashable {
+protocol Transport: Identifiable {
+    var name: String { get }
+    var model: String { get }
+    var manufacturer: String { get }
+    var cost: String { get }
+    var `class`: String { get }
+    var length: String { get }
+    var crew: String { get }
+    var passengers: String { get }
+    var maxAtmospheringSpeed: String { get }
+    var cargoCapacity: String { get }
+    var consumables: String { get }
+    var films: [String] { get }
+    var pilots: [String] { get }
+    var url: String { get }
+}
+
+struct Starship: Transport, Decodable, Hashable {
     let id: Int
-    let name: String
-    let model: String
-    let starshipClass: String
-    let manufaturer: String
-    let costInCredits: String
-    let length: String
-    let crew: String
-    let passengers: String
-    let maxAtmospheringSpeed: String
+    let name: String //
+    let model: String //
+    let `class`: String //
+    let manufacturer: String //
+    let cost: String
+    let length: String //
+    let crew: String //
+    let passengers: String //
+    let maxAtmospheringSpeed: String //
     let MGLT: String
-    let cargoCapacity: String
-    let consumables: String
-    let films: [String]
-    let pilots: [String]
-    let url: String
+    let cargoCapacity: String //
+    let consumables: String //
+    let films: [String] //
+    let pilots: [String] //
+    let url: String //
 
     init(
         id: Int,
         name: String,
         model: String,
-        starshipClass: String,
-        manufaturer: String,
-        costInCredits: String,
+        `class`: String,
+        manufacturer: String,
+        cost: String,
         length: String,
         crew: String,
         passengers: String,
@@ -46,9 +63,9 @@ struct Starship: Decodable, Identifiable, Hashable {
         self.id = id
         self.name = name
         self.model = model
-        self.starshipClass = starshipClass
-        self.manufaturer = manufaturer
-        self.costInCredits = costInCredits
+        self.class = `class`
+        self.manufacturer = manufacturer
+        self.cost = cost
         self.length = length
         self.crew = crew
         self.passengers = passengers
@@ -61,12 +78,12 @@ struct Starship: Decodable, Identifiable, Hashable {
         self.url = url
     }
 
-    enum CodingKeys: CodingKey {
+    enum CodingKeys: String, CodingKey {
         case name
         case model
-        case starshipClass
-        case manufaturer
-        case costInCredits
+        case `class` = "starshipClass"
+        case manufacturer
+        case cost = "costInCredits"
         case length
         case crew
         case passengers
@@ -83,9 +100,9 @@ struct Starship: Decodable, Identifiable, Hashable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.name = try container.decode(String.self, forKey: .name)
         self.model = try container.decode(String.self, forKey: .model)
-        self.starshipClass = try container.decode(String.self, forKey: .starshipClass)
-        self.manufaturer = try container.decode(String.self, forKey: .manufaturer)
-        self.costInCredits = try container.decode(String.self, forKey: .costInCredits)
+        self.class = try container.decodeIfPresent(String.self, forKey: .class) ?? "N/E"
+        self.manufacturer = try container.decode(String.self, forKey: .manufacturer)
+        self.cost = try container.decodeIfPresent(String.self, forKey: .cost) ?? "Unknown"
         self.length = try container.decode(String.self, forKey: .length)
         self.crew = try container.decode(String.self, forKey: .crew)
         self.passengers = try container.decode(String.self, forKey: .passengers)
@@ -122,9 +139,9 @@ extension Starship {
             id: 9,
             name: "Death Star",
             model: "DS-1 Orbital Battle Station",
-            starshipClass: "Deep Space Mobile Battlestation",
-            manufaturer: "Imperial Department of Military Research, Sienar Fleet Systems",
-            costInCredits: "1000000000000",
+            class: "Deep Space Mobile Battlestation",
+            manufacturer: "Imperial Department of Military Research, Sienar Fleet Systems",
+            cost: "1000000000000",
             length: "120000",
             crew: "342953",
             passengers: "843342",

@@ -58,7 +58,7 @@ struct People: Decodable, Identifiable, Hashable {
         self.url = url
     }
 
-    enum CodingKeys: CodingKey {
+    enum CodingKeys: String, CodingKey {
         case name
         case height
         case mass
@@ -85,7 +85,7 @@ struct People: Decodable, Identifiable, Hashable {
         self.eyeColor = try container.decode(String.self, forKey: .eyeColor)
         self.birthYear = try container.decode(String.self, forKey: .birthYear)
         self.gender = try container.decode(String.self, forKey: .gender)
-        self.homeworld = try container.decode(String.self, forKey: .homeworld)
+        self.homeworld = try container.decodeIfPresent(String.self, forKey: .homeworld) ?? "N/E"
         self.films = try container.decode([String].self, forKey: .films)
         self.species = try container.decode([String].self, forKey: .species)
         self.vehicles = try container.decode([String].self, forKey: .vehicles)

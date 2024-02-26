@@ -67,7 +67,7 @@ struct Species: Decodable, Identifiable, Hashable {
         self.averageHeight = try container.decode(String.self, forKey: .averageHeight)
         self.averageLifespan = try container.decode(String.self, forKey: .averageLifespan)
         self.language = try container.decode(String.self, forKey: .language)
-        self.homeworld = try container.decode(String.self, forKey: .homeworld)
+        self.homeworld = try container.decodeIfPresent(String.self, forKey: .homeworld) ?? "N/E"
         self.people = try container.decode([String].self, forKey: .people)
         self.films = try container.decode([String].self, forKey: .films)
         self.url = try container.decode(String.self, forKey: .url)

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Vehicle: Decodable, Identifiable {
+struct Vehicle: Transport, Decodable {
     let id: Int
     let name: String
     let model: String
@@ -19,7 +19,7 @@ struct Vehicle: Decodable, Identifiable {
     let passengers: String
     let cargoCapacity: String
     let consumables: String
-    let vehicleClass: String
+    let `class`: String
     let pilots: [String]
     let films: [String]
     let url: String
@@ -36,7 +36,7 @@ struct Vehicle: Decodable, Identifiable {
         passengers: String,
         cargoCapacity: String,
         consumables: String,
-        vehicleClass: String,
+        `class`: String,
         pilots: [String],
         films: [String],
         url: String
@@ -52,42 +52,42 @@ struct Vehicle: Decodable, Identifiable {
         self.passengers = passengers
         self.cargoCapacity = cargoCapacity
         self.consumables = consumables
-        self.vehicleClass = vehicleClass
+        self.class = `class`
         self.pilots = pilots
         self.films = films
         self.url = url
     }
 
-    enum CodingKeys: CodingKey {
+    enum CodingKeys: String, CodingKey {
         case name
         case model
         case manufacturer
-        case cost
+        case cost = "costInCredits"
         case length
         case maxAtmospheringSpeed
         case crew
         case passengers
         case cargoCapacity
         case consumables
-        case vehicleClass
+        case `class` = "vehicleClass"
         case pilots
         case films
         case url
     }
 
     init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let container = try decoder.container(keyedBy: Self.CodingKeys.self)
         self.name = try container.decode(String.self, forKey: .name)
         self.model = try container.decode(String.self, forKey: .model)
         self.manufacturer = try container.decode(String.self, forKey: .manufacturer)
-        self.cost = try container.decode(String.self, forKey: .cost)
+        self.cost = try container.decodeIfPresent(String.self, forKey: .cost) ?? "Unknown"
         self.length = try container.decode(String.self, forKey: .length)
         self.maxAtmospheringSpeed = try container.decode(String.self, forKey: .maxAtmospheringSpeed)
         self.crew = try container.decode(String.self, forKey: .crew)
         self.passengers = try container.decode(String.self, forKey: .passengers)
         self.cargoCapacity = try container.decode(String.self, forKey: .cargoCapacity)
         self.consumables = try container.decode(String.self, forKey: .consumables)
-        self.vehicleClass = try container.decode(String.self, forKey: .vehicleClass)
+        self.class = try container.decodeIfPresent(String.self, forKey: .class) ?? "N/E"
         self.pilots = try container.decode([String].self, forKey: .pilots)
         self.films = try container.decode([String].self, forKey: .films)
         self.url = try container.decode(String.self, forKey: .url)
@@ -125,7 +125,7 @@ extension Vehicle {
             passengers: "40",
             cargoCapacity: "1000",
             consumables: "unknown",
-            vehicleClass: "assault walker",
+            class: "assault walker",
             pilots: .init(),
             films: .init(),
             url: "https://swapi.dev/api/vehicles/18/"
