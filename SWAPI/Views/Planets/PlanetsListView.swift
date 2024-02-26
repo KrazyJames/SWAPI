@@ -53,7 +53,7 @@ struct PlanetsListView: View {
         do {
             planets = try await service.getAll(page: 1)
         } catch {
-            debugPrint(error.localizedDescription)
+            debugPrint(error)
         }
     }
 }

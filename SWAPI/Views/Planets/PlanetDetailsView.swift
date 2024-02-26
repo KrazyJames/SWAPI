@@ -76,7 +76,7 @@ struct PlanetDetailsView: View {
         do {
             details = try await service.getDetails(for: planet)
         } catch {
-            debugPrint(error.localizedDescription)
+            debugPrint(error)
         }
         loading = false
     }

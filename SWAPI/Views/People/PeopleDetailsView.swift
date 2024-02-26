@@ -70,7 +70,7 @@ struct PeopleDetailsView: View {
         do {
             details = try await service.getDetails(for: people)
         } catch {
-            debugPrint(error.localizedDescription)
+            debugPrint(error)
         }
         loading = false
     }

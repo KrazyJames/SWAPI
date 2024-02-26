@@ -51,7 +51,7 @@ struct FilmDetailsView: View {
         do {
             details = try await service.getDetails(for: film)
         } catch {
-            debugPrint(error.localizedDescription)
+            debugPrint(error)
         }
         loading = false
     }

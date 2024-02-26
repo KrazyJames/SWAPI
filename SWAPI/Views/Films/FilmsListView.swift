@@ -52,7 +52,7 @@ struct FilmsListView: View {
         do {
             films = try await service.getAll(page: 1)
         } catch {
-            debugPrint(error.localizedDescription)
+            debugPrint(error)
         }
     }
 }
