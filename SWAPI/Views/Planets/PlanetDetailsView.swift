@@ -64,7 +64,7 @@ struct PlanetDetailsView: View {
             PeopleDetailsView(people: person)
         }
         .navigationDestination(for: Film.self) { film in
-            Text(film.title)
+            FilmDetailsView(film: film)
         }
         .task {
             await load()
@@ -72,6 +72,7 @@ struct PlanetDetailsView: View {
     }
 
     private func load() async {
+        guard details == nil else { return }
         loading = true
         do {
             details = try await service.getDetails(for: planet)
