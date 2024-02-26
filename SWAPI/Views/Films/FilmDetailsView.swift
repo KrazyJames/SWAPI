@@ -23,7 +23,6 @@ struct FilmDetailsView: View {
                         showsIndicators: false
                     ) {
                         Text(film.openingCrawl)
-                            .frame(width: .infinity)
                     }
                 } label: {
                     Text("Movie crawl")
@@ -47,6 +46,7 @@ struct FilmDetailsView: View {
     }
 
     private func load() async {
+        guard details == nil else { return }
         loading = true
         do {
             details = try await service.getDetails(for: film)
