@@ -24,7 +24,11 @@ struct SWAPI {
         let (data, response) = try await session.data(for: router.request)
         switch response.status.kind {
         case .successful:
-            return try decoder.decode(T.self, from: data)
+            do {
+                return try decoder.decode(T.self, from: data)
+            } catch {
+                throw NetworkError.decodingFailure
+            }
         case .invalid, .informational, .redirection, .clientError, .serverError:
             throw NetworkError.requestFailed(statusCode: response.status.code)
         }
