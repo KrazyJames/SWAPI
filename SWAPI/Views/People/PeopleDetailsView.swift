@@ -49,7 +49,7 @@ struct PeopleDetailsView: View {
             }
         }
         .navigationDestination(for: Film.self) { film in
-            Text(film.title)
+            FilmDetailsView(film: film)
         }
         .navigationDestination(for: Species.self) { species in
             Text(species.name)
@@ -66,6 +66,7 @@ struct PeopleDetailsView: View {
     }
 
     private func load() async {
+        guard details == nil else { return }
         loading = true
         do {
             details = try await service.getDetails(for: people)
