@@ -48,12 +48,18 @@ struct PeopleListView: View {
             .task {
                 await load()
             }
+            .refreshable {
+                Task {
+                    await load()
+                }
+            }
         }
     }
 
     private func load() async {
         guard people.isEmpty else { return }
         isLoading = true
+        people.removeAll()
         do {
             people = try await service.getAll(page: 1)
         } catch {
@@ -65,5 +71,5 @@ struct PeopleListView: View {
 
 #Preview {
     PeopleListView()
-        .environment(SWAPIService.mock)
+        .environment(SWAPIService.init())
 }

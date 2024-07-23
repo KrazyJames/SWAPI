@@ -23,7 +23,13 @@ struct FilmDetailsView: View {
                         showsIndicators: false
                     ) {
                         Text(film.openingCrawl)
+                            .font(.title.bold())
+                            .foregroundStyle(Color.yellow)
+                            .multilineTextAlignment(.center)
+                            .shadow(color: .yellow, radius: 10)
+                            .padding()
                     }
+                    .preferredColorScheme(.dark)
                 } label: {
                     Text("Movie crawl")
                 }
@@ -60,5 +66,6 @@ struct FilmDetailsView: View {
 #Preview {
     NavigationStack {
         FilmDetailsView(film: .demo)
-    }.environment(SWAPIService.mock)
+    }
+    .environment(SWAPIService.mock)
 }

@@ -64,7 +64,7 @@ struct ContentView: View {
         case .films:
             FilmsListView()
         default:
-            Text(tab.title)
+            ContentUnavailableView(tab.title, systemImage: tab.icon, description: Text("This feature is not available right now"))
         }
     }
 }

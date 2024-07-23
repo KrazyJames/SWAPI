@@ -52,7 +52,7 @@ struct PeopleDetailsView: View {
             FilmDetailsView(film: film)
         }
         .navigationDestination(for: Species.self) { species in
-            Text(species.name)
+            ContentUnavailableView(species.name, systemImage: "person.fill.questionmark", description: Text("This feature is not available"))
         }
         .overlay {
             if loading {
